@@ -1,10 +1,11 @@
-import TicTacToe from './components/TicTacToe';
+import TicTacToe from './components/Tictactoe/Tictactoe';
+import Container from '@mui/material/Container';
 
 function App() {
   return (
-    <div className="App">
+    <Container sx={{marginTop: 2}}  >
       <TicTacToe />
-    </div>
+    </Container>
   );
 }
 

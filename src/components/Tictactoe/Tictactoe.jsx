@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Box } from '@mui/material';
+import ShowGameResult from '../ShowGameResult/ShowGameResult';
+import GameStatus from '../GameStatus/GameStatus';
+import Board from '../Board/Board';
 
 const TicTacToe = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState('X');
   const [winner, setWinner] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleClick = (index) => {
     if (board[index] === null && !winner) {
@@ -32,50 +37,44 @@ const TicTacToe = () => {
       const [a, b, c] = winConditions[i];
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         setWinner(board[a]);
+        setOpen(true);
         break;
       }
     }
-  };
 
-  const renderSquare = (index) => {
-    return (
-      <button className="square" onClick={() => handleClick(index)}>
-        {board[index]}
-      </button>
-    );
-  };
-
-  const renderStatus = () => {
-    if (winner) {
-      return `Winner: ${winner}`;
-    } else if (board.every((square) => square !== null)) {
-      return 'Draw';
-    } else {
-      return `Next player: ${player}`;
+    if (board.every((square) => square !== null)) {
+      setOpen(true);
     }
   };
 
+  const handleClose = (event) => {
+    event.preventDefault();
+    setOpen(false);
+  };
+
+  const resetGame = () => {
+    setOpen(false);
+    setBoard(Array(9).fill(null));
+    setPlayer('X');
+    setWinner(null);
+  };
+
   return (
-    <div>
-      <div className="status">{renderStatus()}</div>
-      <div className="board">
-        <div className="row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div className="row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
-      </div>
-    </div>
+    <Box sx={{ backgroundColor: '#fff' }}>
+      <Board board={board} handleClick={handleClick} winner={winner} />
+      <GameStatus
+        winner={winner}
+        player={player}
+        board={board}
+        resetGame={resetGame}
+      />
+      <ShowGameResult
+        winner={winner}
+        open={open}
+        resetGame={resetGame}
+        handleClose={handleClose}
+      />
+    </Box>
   );
 };
 
