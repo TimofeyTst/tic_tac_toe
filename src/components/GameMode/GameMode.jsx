@@ -12,7 +12,7 @@ const GameMode = () => {
 
   return (
     <Box>
-      <Box align="center" sx={{ display: 'flex', justifyContent: 'center', '& > *': { mr: 3 } }}>
+      <Box align="center" sx={{ display: 'flex', justifyContent: 'center', '& > *': { mr: 4 } }}>
         <Button variant={mode === 'human' ? 'contained' : 'outlined'} onClick={() => handleModeSelect('human')}>Играть с человеком</Button>
         <Button variant={mode === 'computer' ? 'contained' : 'outlined'} onClick={() => handleModeSelect('computer')}>Играть с компьютером</Button>
       </Box>
